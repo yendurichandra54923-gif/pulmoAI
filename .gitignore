@@ -1,0 +1,13 @@
+# Environments
+.venv/
+__pycache__/
+
+# Frontend dependencies
+app/pulmo-frontend/node_modules/
+
+# Datasets & DB
+dataset/
+hospital.db
+
+# Environment variables
+.env
