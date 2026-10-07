@@ -286,7 +286,7 @@ try:
     print("=" * 60)
     print("  PulmoAI — Loading Ensemble Model …")
     print("=" * 60)
-    model = load_model(MODEL_PATH)
+    model = load_model(MODEL_PATH, compile=False)
     print(f"  ✓ Model loaded successfully from: {MODEL_PATH}")
     print(f"  ✓ Input shape : {model.input_shape}")
     print(f"  ✓ Output shape: {model.output_shape}")
