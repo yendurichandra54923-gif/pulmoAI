@@ -29,6 +29,7 @@ import secrets
 import sqlite3
 from contextlib import contextmanager
 from jose import JWTError, jwt
+from keras.initializers import GlorotUniform, Zeros
 
 # ---------------------------------------------------------------------------
 # App & Middleware
@@ -286,7 +287,25 @@ try:
     print("=" * 60)
     print("  PulmoAI — Loading Ensemble Model …")
     print("=" * 60)
-    model = load_model(MODEL_PATH, compile=False)
+   # --- BYPASS KERAS VERSION ERRORS ---
+    class SafeGlorot(GlorotUniform):
+     def __init__(self, **kwargs):
+        kwargs.pop('input_axes', None)
+        kwargs.pop('output_axes', None)
+        super().__init__(**kwargs)
+
+    class SafeZeros(Zeros):
+        def __init__(self, **kwargs):
+         kwargs.pop('input_axes', None)
+         kwargs.pop('output_axes', None)
+        super().__init__(** kwargs)
+
+    model = load_model(
+    MODEL_PATH, 
+    compile=False, 
+    custom_objects={'GlorotUniform': SafeGlorot, 'Zeros': SafeZeros}
+)
+# -----------------------------------
     print(f"  ✓ Model loaded successfully from: {MODEL_PATH}")
     print(f"  ✓ Input shape : {model.input_shape}")
     print(f"  ✓ Output shape: {model.output_shape}")
