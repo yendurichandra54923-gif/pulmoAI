@@ -60,7 +60,7 @@ DATABASE_PATH = Path(
         str(Path(__file__).resolve().parent / "app" / "hospital.db"),
     )
 ).resolve()
-JWT_SECRET_KEY = os.environ.get("PULMOAI_JWT_SECRET", "")
+JWT_SECRET = os.getenv("PULMOAI_JWT_SECRET", "pulmoai_super_secret_jwt_key_2026")
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRE_MINUTES = 60 * 12
 bearer_scheme = HTTPBearer(auto_error=False)
